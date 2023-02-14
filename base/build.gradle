@@ -1,0 +1,77 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    def androidVersion = rootProject.android
+    compileSdk = androidVersion.compileSdk
+
+    defaultConfig {
+        minSdk androidVersion.minSdk
+        targetSdk androidVersion.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compiler_version
+    }
+}
+
+dependencies {
+
+    api "androidx.core:core-ktx:$androidx_version"
+    api "androidx.compose.ui:ui:$compose_version"
+    api "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    api "androidx.compose.material3:material3:$material_version"
+    api "androidx.constraintlayout:constraintlayout-compose:$constraintlayout_version"
+    //The same viewpager
+    api "com.google.accompanist:accompanist-pager:$viewpager_version"
+    api "com.google.accompanist:accompanist-pager-indicators:$viewpager_version"
+    //if you not using icon material => delete
+    api "androidx.compose.material:material-icons-extended:$icon_version"
+    //permission
+    implementation "com.google.accompanist:accompanist-permissions:$permisson_version"
+
+    api "androidx.navigation:navigation-compose:$composeNavigationVersion"
+
+    api "androidx.compose.foundation:foundation:$compose_version"
+
+    api "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    api "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
+    api "androidx.activity:activity-compose:$activity_version"
+    //systemUI
+    api "com.google.accompanist:accompanist-systemuicontroller:$systemui"
+    //Load image
+    api "com.github.bumptech.glide:compose:$glide_version"
+    //Network
+    api "com.github.skydoves:sandwich:$sandwich"
+    //Gson
+    api "com.google.code.gson:gson:$gson"
+    //Koin for Android
+    api "io.insert-koin:koin-androidx-compose:$koin_version"
+    //Log
+    api "com.jakewharton.timber:timber:$timber_version"
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
