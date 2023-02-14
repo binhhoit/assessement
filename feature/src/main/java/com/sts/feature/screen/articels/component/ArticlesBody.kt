@@ -33,14 +33,17 @@ import com.sts.feature.utils.ModeArticle
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ArticlesBody(modifier: Modifier,
-                 viewModel: ArticlesViewModel,
-                 mode: ModeArticle,
-                 keyword: String?) {
-
+fun ArticlesBody(
+    modifier: Modifier,
+    viewModel: ArticlesViewModel,
+    mode: ModeArticle,
+    keyword: String?,
+) {
     val uiState = viewModel.articlesUiState.value
-    Box(modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
         when (mode.name) {
             ModeArticle.Search.name -> {
                 LaunchedEffect(key1 = Unit) {
@@ -50,22 +53,30 @@ fun ArticlesBody(modifier: Modifier,
             }
             else -> {
                 if (uiState.dataArticles.isNotEmpty()) {
-                    LazyColumn(modifier = modifier
-                        .padding(top = 87.dp)
-                        .fillMaxSize(),
-                        contentPadding = PaddingValues(10.dp)) {
-                        items(uiState.dataArticles.toList(),
-                            key = { id -> "$id" }) { itemData ->
-                            ItemArticle(item = itemData,
-                                modifier = Modifier.animateItemPlacement())
+                    LazyColumn(
+                        modifier = modifier
+                            .padding(top = 87.dp)
+                            .fillMaxSize(),
+                        contentPadding = PaddingValues(10.dp),
+                    ) {
+                        items(
+                            uiState.dataArticles.toList(),
+                            key = { id -> "$id" },
+                        ) { itemData ->
+                            ItemArticle(
+                                item = itemData,
+                                modifier = Modifier.animateItemPlacement(),
+                            )
                         }
                     }
                 } else if (uiState.isLoading.value) {
                     CircularProgressIndicator()
                 } else if (uiState.throwError.value.isNotEmpty()) {
-                    Toast.makeText(LocalContext.current,
+                    Toast.makeText(
+                        LocalContext.current,
                         uiState.throwError.value,
-                        Toast.LENGTH_LONG).show()
+                        Toast.LENGTH_LONG,
+                    ).show()
                 }
                 LaunchedEffect(key1 = Unit) {
                     viewModel.loadArticlesPopularViewMode()
@@ -73,31 +84,28 @@ fun ArticlesBody(modifier: Modifier,
             }
         }
     }
-
-
 }
 
 @Composable
 fun ItemArticle(
     item: Article,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     ElevatedCard(
         modifier = modifier
             .padding(vertical = 5.dp)
             .fillMaxWidth(),
         shape = RoundedCornerShape(5.dp),
-        colors = CardDefaults.elevatedCardColors(containerColor = Color.White)
+        colors = CardDefaults.elevatedCardColors(containerColor = Color.White),
     ) {
         Column(horizontalAlignment = Alignment.Start) {
-
             Column(modifier = Modifier.padding(10.dp)) {
                 Text(
                     text = item.title ?: item.abstract ?: "",
                     style = styleText(),
                     color = Color.Black,
                     maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
                 )
 
                 Text(
@@ -106,14 +114,12 @@ fun ItemArticle(
                     style = styleText(),
                     color = Color.Black,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
                 )
-
             }
         }
     }
 }
-
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -122,10 +128,12 @@ fun LoadArticleForSearch(viewModel: ArticlesViewModel) {
 
     val articlesPaging = viewModel.loadArticlesSearch.collectAsLazyPagingItems()
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(top = 70.dp), contentAlignment = Alignment.Center) {
-
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 70.dp),
+        contentAlignment = Alignment.Center,
+    ) {
         SwipeRefresh(
             state = swipeRefreshState,
             onRefresh = {
@@ -139,39 +147,48 @@ fun LoadArticleForSearch(viewModel: ArticlesViewModel) {
                     start = 5.dp,
                     top = 10.dp,
                     end = 5.dp,
-                    bottom = 5.dp
+                    bottom = 5.dp,
                 ),
-
-
-                ) {
-                items(items = articlesPaging,
-                    key = { item -> item._id ?: "" }) { item ->
+            ) {
+                items(
+                    items = articlesPaging,
+                    key = { item -> item._id ?: "" },
+                ) { item ->
                     swipeRefreshState.isRefreshing = false
-                    if (item != null)
-                        ItemArticle(item = item,
-                            modifier = Modifier.animateItemPlacement())
+                    if (item != null) {
+                        ItemArticle(
+                            item = item,
+                            modifier = Modifier.animateItemPlacement(),
+                        )
+                    }
                 }
                 item {
-                    if (articlesPaging.loadState.append is LoadState.Loading)
-                        Box(modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp),
-                            Alignment.Center) {
+                    if (articlesPaging.loadState.append is LoadState.Loading) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(200.dp),
+                            Alignment.Center,
+                        ) {
                             CircularProgressIndicator()
                         }
+                    }
                 }
             }
         }
 
-        if (articlesPaging.loadState.refresh is LoadState.Loading || articlesPaging.itemCount == 0)
+        if (articlesPaging.loadState.refresh is LoadState.Loading || articlesPaging.itemCount == 0) {
             CircularProgressIndicator()
+        }
     }
 
     articlesPaging.apply {
         if (loadState.append is LoadState.Error) {
-            Toast.makeText(LocalContext.current,
+            Toast.makeText(
+                LocalContext.current,
                 Constants.ERROR_LOAD_FAILED,
-                Toast.LENGTH_SHORT).show()
+                Toast.LENGTH_SHORT,
+            ).show()
         }
     }
 }

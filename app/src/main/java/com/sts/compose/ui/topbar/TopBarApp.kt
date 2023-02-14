@@ -19,7 +19,7 @@ import com.sts.feature.ext.styleTextLight
 import com.sts.feature.navigation.Route
 
 /***
-* @see<a href="https://m3.material.io/components/top-app-bar/specs">MATERIAL</a>
+ * @see<a href="https://m3.material.io/components/top-app-bar/specs">MATERIAL</a>
  ***/
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,12 +27,12 @@ import com.sts.feature.navigation.Route
 fun TopBarApp(
     navController: NavController,
     topBarState: MutableState<Boolean>,
-    routeName: String
+    routeName: String,
 ) {
     val route = Route.valueOf(routeName)
     val isMainScreen = listOf(
         Route.Home.route,
-    ).contains(route?.route?:"")
+    ).contains(route?.route ?: "")
 
     AnimatedVisibility(
         visible = topBarState.value,
@@ -52,7 +52,7 @@ fun TopBarApp(
                                 textAlign = TextAlign.Center,
                                 text = route?.run {
                                     stringResource(id = route.title)
-                                }?:"",
+                                } ?: "",
                                 modifier = Modifier,
                                 style = styleTextLight(15.sp)
                             )

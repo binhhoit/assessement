@@ -34,15 +34,18 @@ import com.sts.feature.screen.home.HomeViewModel
 fun BodyHome(
     modifier: Modifier,
     viewModel: HomeViewModel,
-    direction: (String) -> Unit
+    direction: (String) -> Unit,
 ) {
     Column(
         Modifier
             .padding(top = 107.dp)
             .padding(horizontal = 10.dp)
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
-        Text(text = stringResource(id = R.string.search), style = styleTextBold())
+        Text(
+            text = stringResource(id = R.string.search),
+            style = styleTextBold(),
+        )
         ItemHomePage(stringResource(R.string.search_articles)) {
             direction.invoke(Route.Search.route)
         }
@@ -62,7 +65,6 @@ fun BodyHome(
     }
 }
 
-
 @Composable
 fun ItemHomePage(string: String, callback: () -> Unit) {
     Row(
@@ -74,13 +76,17 @@ fun ItemHomePage(string: String, callback: () -> Unit) {
             }
             .padding(horizontal = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(text = string,
-            style = styleTextLight())
+        Text(
+            text = string,
+            style = styleTextLight(),
+        )
 
-        Icon(imageVector = Icons.Filled.ChevronRight,
-            contentDescription = string)
+        Icon(
+            imageVector = Icons.Filled.ChevronRight,
+            contentDescription = string,
+        )
     }
     Divider()
 }
@@ -99,7 +105,7 @@ fun RequestPermissionsLocation() {
 fun RequestPermissionLocation(context: Context) {
     val stateCheckLocation = remember { mutableStateOf(false) }
     val launcherMultiplePermissions = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
+        ActivityResultContracts.RequestMultiplePermissions(),
     ) { permissionsMap ->
         val areGranted =
             permissionsMap.values.reduce { acc, next -> acc && next }
@@ -114,13 +120,13 @@ fun RequestPermissionLocation(context: Context) {
         }
     }
 
-    if (stateCheckLocation.value)
+    if (stateCheckLocation.value) {
         StartLocationUpdate(context)
+    }
 
     LaunchedEffect(key1 = Unit) {
         launcherMultiplePermissions.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
     }
-
 }
 
 @SuppressLint("MissingPermission")
@@ -132,28 +138,41 @@ fun StartLocationUpdate(context: Context) {
         mutableStateOf<Location?>(null)
     }
 
-    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f,
-        { location.value = it }, null)
+    locationManager.requestLocationUpdates(
+        LocationManager.GPS_PROVIDER,
+        0,
+        0f,
+        { location.value = it },
+        null,
+    )
 
     location.value?.let {
-        Box(modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center) {
-            Text(text = buildString {
-                append(stringResource(R.string.latitude) + " ")
-                append(it.latitude)
-                append("\n" + stringResource(R.string.longitude) + " ")
-                append(it.longitude)
-            },
-                style = TextStyle())
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                text = buildString {
+                    append(stringResource(R.string.latitude) + " ")
+                    append(it.latitude)
+                    append("\n" + stringResource(R.string.longitude) + " ")
+                    append(it.longitude)
+                },
+                style = TextStyle(),
+            )
         }
     }
 }
 
 private fun checkRequestPermissionLocation(context: Context): Boolean {
-    if (ActivityCompat.checkSelfPermission(context,
-            Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+    if (ActivityCompat.checkSelfPermission(
             context,
-            Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Manifest.permission.ACCESS_FINE_LOCATION,
+        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+        ) != PackageManager.PERMISSION_GRANTED
+    ) {
         return false
     }
     return true

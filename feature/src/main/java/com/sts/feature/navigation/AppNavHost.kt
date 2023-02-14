@@ -26,9 +26,9 @@ import org.koin.androidx.compose.koinViewModel
 fun AppNavHost(
     modifier: Modifier,
     navController: NavHostController,
-    startDestination: String = Route.Home.route
+    startDestination: String = Route.Home.route,
 ) {
-        NavHost(
+    NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
@@ -47,28 +47,28 @@ fun AppNavHost(
             }
         }
 
-            composable(Route.Articles.route,
-                arguments = listOf(navArgument(MODE) {
-                    defaultValue = ModeArticle.Viewed.name
-                }, navArgument(KEYWORD) {
-                    defaultValue = ""
-                })) { backStackEntry ->
-                val articlesViewModel = koinViewModel<ArticlesViewModel>()
+        composable(Route.Articles.route,
+            arguments = listOf(navArgument(MODE) {
+                defaultValue = ModeArticle.Viewed.name
+            }, navArgument(KEYWORD) {
+                defaultValue = ""
+            })) { backStackEntry ->
+            val articlesViewModel = koinViewModel<ArticlesViewModel>()
 
-                val mode = backStackEntry.arguments?.getString(MODE)
-                    ?: ModeArticle.Viewed.name
-                val keyword = backStackEntry.arguments?.getString(KEYWORD)
-                ArticlesScreen(modifier = modifier,
-                    viewModel = articlesViewModel,
-                    mode = ModeArticle.valueOf(mode),
-                    keyword = keyword)
-            }
+            val mode = backStackEntry.arguments?.getString(MODE)
+                ?: ModeArticle.Viewed.name
+            val keyword = backStackEntry.arguments?.getString(KEYWORD)
+            ArticlesScreen(modifier = modifier,
+                viewModel = articlesViewModel,
+                mode = ModeArticle.valueOf(mode),
+                keyword = keyword)
+        }
 
         dialog(route = Route.DialogLoading.route,
             dialogProperties = DialogProperties(
                 dismissOnBackPress = false,
                 dismissOnClickOutside = false,
-            )){
+            )) {
             Box(modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()

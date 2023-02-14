@@ -19,34 +19,18 @@ fun ManagerStateTopBarAndBottomBar(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val system = rememberSystemUiController()
 
-    // Control TopBar and BottomBar
     when (navBackStackEntry?.destination?.route) {
-       /* Route.Welcome.route, Route.Login.route, Route.DialogLoading.route, Route.DialogError.route-> {
-            // Show BottomBar and TopBar
-            bottomBarState.value = false
-            topBarState.value = false
-            system.isStatusBarVisible = true
-            system.setStatusBarColor(color = Color.White)
-        }*/
-        Route.Home.route,
-        /*Route.Feeds.route,
-        Route.Transaction.route,
-        Route.MyProfile.route*/ ->{
+        Route.Home.route, ->{
             bottomBarState.value = true
             topBarState.value = true
             system.isStatusBarVisible = true
             system.setStatusBarColor(color = GreenApp)
         }
-        /*Route.EditProfile.route -> {
-            bottomBarState.value = false
-            topBarState.value = false
-        }*/
         else -> {
             if (navBackStackEntry?.destination?.route.isNullOrBlank()) {
                 bottomBarState.value = false
                 topBarState.value = false
             } else {
-                // Show BottomBar and TopBar
                 bottomBarState.value = false
                 topBarState.value = true
                 system.isStatusBarVisible = true

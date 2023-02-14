@@ -13,26 +13,28 @@ import com.sts.feature.ext.styleText
 import com.sts.feature.navigation.Route
 import com.sts.feature.utils.ModeArticle
 
-
 @Composable
-fun SearchBody(modifier: Modifier,
-               direction: (String) -> Unit) {
-
+fun SearchBody(
+    modifier: Modifier,
+    direction: (String) -> Unit,
+) {
     val inputSearchKey = remember { mutableStateOf("") }
 
-    Column(modifier = modifier
-        .fillMaxSize()
-        .padding(top = 187.dp)
-        .padding(horizontal = 15.dp)) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(top = 187.dp)
+            .padding(horizontal = 15.dp),
+    ) {
         SearchBar(modifier = Modifier, inputKey = inputSearchKey)
         ButtonSearch(modifier = Modifier, inputKey = inputSearchKey) {
             direction.invoke(
                 Route.Articles.route
                     .replaceFirst("{mode}", ModeArticle.Search.name)
-                    .replaceFirst("{keyword}", inputSearchKey.value))
+                    .replaceFirst("{keyword}", inputSearchKey.value),
+            )
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,27 +47,30 @@ fun SearchBar(modifier: Modifier, inputKey: MutableState<String>) {
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 containerColor = MaterialTheme.colorScheme.surface,
                 focusedBorderColor = Color.Black,
-                unfocusedBorderColor = Color.Black
+                unfocusedBorderColor = Color.Black,
             ),
             placeholder = {
                 Text(
                     text = "Search product here",
                     fontSize = 13.sp,
-                    style = styleText()
+                    style = styleText(),
                 )
             },
             textStyle = styleText(),
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 15.dp)
+                .padding(vertical = 15.dp),
         )
     }
 }
 
-
 @Composable
-fun ButtonSearch(modifier: Modifier, inputKey: MutableState<String>, onClick: () -> Unit) {
+fun ButtonSearch(
+    modifier: Modifier,
+    inputKey: MutableState<String>,
+    onClick: () -> Unit,
+) {
     Button(
         modifier = modifier
             .fillMaxWidth()
@@ -75,8 +80,11 @@ fun ButtonSearch(modifier: Modifier, inputKey: MutableState<String>, onClick: ()
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.onSecondary,
             contentColor = Color.White,
-        )
+        ),
     ) {
-        Text(text = stringResource(id = R.string.search), style = styleText(15.sp))
+        Text(
+            text = stringResource(id = R.string.search),
+            style = styleText(15.sp),
+        )
     }
 }
