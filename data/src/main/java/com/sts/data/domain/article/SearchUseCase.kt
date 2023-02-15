@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.sts.data.model.Article
 import com.sts.data.repository.ArticleRepository
+import kotlinx.coroutines.delay
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
@@ -19,6 +20,7 @@ class SearchUseCase(private val keyword: String,
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
         return try {
             val nextPage = params.key ?: 0
+            delay(2000)
             val result = repo.getArticlesSearch(keyword = keyword, page = nextPage)
             Timber.e(result.response.docs.size.toString() + "  " + nextPage)
             LoadResult.Page(
