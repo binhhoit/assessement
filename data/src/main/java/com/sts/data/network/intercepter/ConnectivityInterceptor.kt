@@ -9,9 +9,9 @@ import okhttp3.Response
 
 class ConnectivityInterceptor(private val mContext: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-       /* if (mContext.currentConnectivityState === ConnectionState.Available) {
+        if (mContext.currentConnectivityState === ConnectionState.Unavailable) {
             throw NoConnectionException()
-        }*/
+        }
         val builder = chain.request().newBuilder()
         return chain.proceed(builder.build())
     }

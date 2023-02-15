@@ -66,8 +66,8 @@ private fun okHttpClient(context: Context): OkHttpClient {
 
     return OkHttpClient.Builder()
         .sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+        .addNetworkInterceptor(ConnectivityInterceptor(context))
         .addInterceptor(getHttpLoggingInterceptor())
-        .addInterceptor(ConnectivityInterceptor(context))
         .addInterceptor { chain ->
 
             val originalRequest = chain.request()

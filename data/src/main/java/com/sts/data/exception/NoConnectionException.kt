@@ -1,3 +1,5 @@
 package com.sts.data.exception
 
-class NoConnectionException : RuntimeException()
+import java.net.ConnectException
+
+class NoConnectionException : ConnectException()
