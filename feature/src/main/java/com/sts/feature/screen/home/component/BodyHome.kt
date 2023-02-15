@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -142,8 +143,18 @@ fun StartLocationUpdate(context: Context) {
         LocationManager.GPS_PROVIDER,
         0,
         0f,
-        { location.value = it },
-        null,
+        object : LocationListener {
+            override fun onLocationChanged(locationChange: Location) {
+                location.value = locationChange
+            }
+
+            override fun onProviderDisabled(provider: String) {
+                Toast.makeText(context,
+                    "$provider " + context.getString(R.string.error_provider_location),
+                    Toast.LENGTH_SHORT).show()
+            }
+        },
+        context.mainLooper,
     )
 
     location.value?.let {

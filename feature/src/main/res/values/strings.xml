@@ -13,5 +13,6 @@
     <string name="latitude">Latitude:</string>
     <string name="longitude">Longitude:</string>
     <string name="public_date">Public date:</string>
+    <string name="error_provider_location">not available on devices</string>
 
 </resources>
