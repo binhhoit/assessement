@@ -11,9 +11,10 @@ import com.sts.data.repository.ArticleRepository
 import com.sts.feature.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import org.koin.core.context.GlobalContext
+import org.koin.core.parameter.parametersOf
 
-class ArticlesViewModelImpl(private val popularViewsUseCase: PopularViewsUseCase,
-                            private val articleRepository: ArticleRepository)
+class ArticlesViewModelImpl(private val popularViewsUseCase: PopularViewsUseCase)
     : ArticlesViewModel() {
 
     private var keywordSearch = ""
@@ -50,7 +51,7 @@ class ArticlesViewModelImpl(private val popularViewsUseCase: PopularViewsUseCase
     }
 
     override val loadArticlesSearch = Pager(PagingConfig(pageSize = 20)){
-        SearchUseCase(keyword = keywordSearch, repo = articleRepository)
+        GlobalContext.get().get<SearchUseCase>{ parametersOf(keywordSearch) }
     }.flow.cachedIn(viewModelScope)
 
 }

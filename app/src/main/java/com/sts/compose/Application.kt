@@ -5,7 +5,7 @@ import com.sts.compose.di.module.appModule
 import com.sts.data.di.databaseModule
 import com.sts.data.di.networkModule
 import com.sts.data.di.repositoryModule
-import com.sts.data.di.userCaseModule
+import com.sts.data.di.useCaseModule
 import com.sts.feature.di.module.viewModelModule
 import com.sts.feature.navigation.Route
 import org.koin.android.ext.koin.androidContext
@@ -29,7 +29,7 @@ class Application : Application() {
             modules(viewModelModule)
             modules(networkModule)
             modules(repositoryModule)
-            modules(userCaseModule)
+            modules(useCaseModule)
             modules(databaseModule)
         }
 

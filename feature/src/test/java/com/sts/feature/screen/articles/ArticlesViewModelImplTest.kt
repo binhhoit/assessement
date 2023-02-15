@@ -5,7 +5,6 @@ import com.sts.data.domain.article.PopularViewsUseCase
 import com.sts.data.model.Article
 import com.sts.data.model.response.ArticlesResponse
 import com.sts.data.model.response.DocArticleResponse
-import com.sts.data.repository.ArticleRepository
 import com.sts.feature.screen.articels.ArticlesViewModel
 import com.sts.feature.screen.articels.ArticlesViewModelImpl
 import com.sts.feature.utils.Constants
@@ -13,12 +12,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceTimeBy
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import kotlin.test.assertEquals
 
@@ -31,9 +33,6 @@ class ArticlesViewModelImplTest {
     @Mock
     private lateinit var popularViewsUseCase: PopularViewsUseCase
 
-    @Mock
-    private lateinit var articleRepository: ArticleRepository
-
     private lateinit var viewModel: ArticlesViewModel
 
     @ExperimentalCoroutinesApi
@@ -43,7 +42,7 @@ class ArticlesViewModelImplTest {
     fun setup() {
         MockitoAnnotations.openMocks(this)
         Dispatchers.setMain(testDispatcher)
-        viewModel = ArticlesViewModelImpl(popularViewsUseCase, articleRepository)
+        viewModel = ArticlesViewModelImpl(popularViewsUseCase)
     }
 
     @Test

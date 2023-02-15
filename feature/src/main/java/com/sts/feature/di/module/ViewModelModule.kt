@@ -9,5 +9,5 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel<HomeViewModel> { HomeViewModelImpl() }
-    viewModel<ArticlesViewModel> { ArticlesViewModelImpl(get(), get()) }
+    viewModel<ArticlesViewModel> { ArticlesViewModelImpl(get()) }
 }
