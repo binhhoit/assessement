@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -148,13 +149,27 @@ fun StartLocationUpdate(context: Context) {
                 location.value = locationChange
             }
 
+            override fun onProviderEnabled(provider: String) {
+                Toast.makeText(context,
+                    "$provider " + context.getString(R.string.provider_location),
+                    Toast.LENGTH_SHORT).show()
+            }
+
             override fun onProviderDisabled(provider: String) {
                 Toast.makeText(context,
                     "$provider " + context.getString(R.string.error_provider_location),
                     Toast.LENGTH_SHORT).show()
             }
+
+            @Suppress("DeprecatedCallableAddReplaceWith")
+            @Deprecated("Deprecated in Java")
+            override fun onStatusChanged(
+                provider: String?,
+                status: Int,
+                extras: Bundle?,
+            ) {}
         },
-        context.mainLooper,
+        null,
     )
 
     location.value?.let {
