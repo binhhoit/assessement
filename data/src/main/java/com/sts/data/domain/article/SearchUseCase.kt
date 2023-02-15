@@ -6,7 +6,6 @@ import com.sts.data.model.Article
 import com.sts.data.repository.ArticleRepository
 import kotlinx.coroutines.delay
 import retrofit2.HttpException
-import timber.log.Timber
 import java.io.IOException
 
 class SearchUseCase(private val keyword: String,
@@ -22,7 +21,6 @@ class SearchUseCase(private val keyword: String,
             val nextPage = params.key ?: 0
             delay(2000)
             val result = repo.getArticlesSearch(keyword = keyword, page = nextPage)
-            Timber.e(result.response.docs.size.toString() + "  " + nextPage)
             LoadResult.Page(
                 data = result.response.docs,
                 prevKey = if (nextPage == 1) null else nextPage - 1,

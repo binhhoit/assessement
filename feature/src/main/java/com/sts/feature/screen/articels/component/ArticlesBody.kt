@@ -177,13 +177,13 @@ fun LoadArticleForSearch(viewModel: ArticlesViewModel) {
             }
         }
 
-        if (articlesPaging.loadState.refresh is LoadState.Loading || articlesPaging.itemCount == 0) {
+        if (articlesPaging.loadState.refresh is LoadState.Loading) {
             CircularProgressIndicator()
         }
     }
 
     articlesPaging.apply {
-        if (loadState.append is LoadState.Error) {
+        if (loadState.append is LoadState.Error || loadState.refresh is LoadState.Error) {
             Toast.makeText(
                 LocalContext.current,
                 Constants.ERROR_LOAD_FAILED,
