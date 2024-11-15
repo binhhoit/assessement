@@ -1,0 +1,13 @@
+<resources>
+    <string name="my_reward_point">My Reward Point</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="become_seller">Become Seller</string>
+    <string name="help_center">Help Center</string>
+    <string name="categories">Categories</string>
+    <string name="all_products">All Products</string>
+    <string name="new_release">New Release</string>
+    <string name="promotion">Promotion</string>
+    <string name="setting">Settings</string>
+    <string name="logout">Logout</string>
+
+</resources>

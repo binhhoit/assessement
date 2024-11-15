@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="articles">Articles</string>
+    <string name="close">Close</string>
+    <string name="search_articles">Search Articles</string>
+    <string name="popular">Popular</string>
+    <string name="most_viewed">Most Viewed</string>
+    <string name="most_shared">Most Shared</string>
+    <string name="most_emails">Most Emails</string>
+    <string name="latitude">Latitude:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="public_date">Public date:</string>
+    <string name="error_provider_location">not available on devices</string>
+    <string name="provider_location">Location turn on</string>
+
+</resources>
